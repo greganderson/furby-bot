@@ -1,13 +1,15 @@
-from random import randint
+from random_item_list import RandomItemList
 import time
 
-starters = []
+starter_messages = []
 with open('furby-greetings.txt', 'r') as f:
-    starters = f.read().split('\n')
+    starter_messages = f.read().split('\n')
+starters = RandomItemList(starter_messages)
 
-responses = []
+response_messages = []
 with open('furby-responses.txt', 'r') as f:
-    responses = f.read().split('\n')
+    response_messages = f.read().split('\n')
+responses = RandomItemList(response_messages)
 
 typing_ellipsis = [
     "Furby: .",
@@ -19,7 +21,7 @@ def typing(s):
     # Determine how long to do the typing ellipsis, but at least do 3
     time_for_ellipsis = max(int(len(s) / 7), 3)
 
-    print("Furby: ", end='')
+    print("\nFurby: ", end='')
     time.sleep(.1)
 
     for i in range(time_for_ellipsis):
@@ -30,17 +32,17 @@ def typing(s):
         time.sleep(.5)
     print("\r             ")
 
-start = starters[randint(0, len(starters)) - 1]
+start = starters.next_item()
 typing(start)
 user_response = input("Furby: {}\nYou: ".format(start))
 
 # Keep the friendly conversation going
 while "thank" not in user_response.lower():
-    furby_response = responses[randint(0, len(responses)) - 1]
+    furby_response = responses.next_item()
     typing(furby_response)
     user_response = input("Furby: {}\nYou: ".format(furby_response))
     time.sleep(.5)
 
-end = "No problem, see ya later!"
+end = "Furby: No problem, see ya later!"
 typing(end)
 print(end)
