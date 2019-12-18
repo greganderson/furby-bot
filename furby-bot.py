@@ -1,24 +1,13 @@
 from random import randint
 import time
 
-starters = [
-    "What's on your mind?",
-    "What's up?",
-    "Hey",
-    "What problem are you thinking about right now?"
-]
+starters = []
+with open('furby-greetings.txt', 'r') as f:
+    starters = f.read().split('\n')
 
-responses = [
-    "Yeah that's a good point.",
-    "Huh, interesting.",
-    "What other ways have you tried looking at it?",
-    "Hmm, not sure I follow.",
-    "I see",
-    "Oh yeah interesting.",
-    "Yep",
-    "Okay yeah",
-    "That might work..."
-]
+responses = []
+with open('furby-responses.txt', 'r') as f:
+    responses = f.read().split('\n')
 
 typing_ellipsis = [
     "Furby: .",
@@ -28,7 +17,7 @@ typing_ellipsis = [
 
 def typing(s):
     # Determine how long to do the typing ellipsis, but at least do 3
-    time_for_ellipsis = max(int(len(s) / 6), 3)
+    time_for_ellipsis = max(int(len(s) / 7), 3)
 
     print("Furby: ", end='')
     time.sleep(.1)
